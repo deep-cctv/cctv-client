@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      ky:
+        specifier: ^1.7.2
+        version: 1.7.2
       solid-js:
         specifier: ^1.9.3
         version: 1.9.3
@@ -1084,6 +1087,10 @@ packages:
 
   known-css-properties@0.30.0:
     resolution: {integrity: sha512-VSWXYUnsPu9+WYKkfmJyLKtIvaRJi1kXUqVmBACORXZQxT5oZDsoZ2vQP+bQFDnWtpI/4eq3MLoRMjI2fnLzTQ==}
+
+  ky@1.7.2:
+    resolution: {integrity: sha512-OzIvbHKKDpi60TnF9t7UUVAF1B4mcqc02z5PIvrm08Wyb+yOcz63GRvEuVxNT18a9E1SrNouhB4W2NNLeD7Ykg==}
+    engines: {node: '>=18'}
 
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
@@ -2646,6 +2653,8 @@ snapshots:
       json-buffer: 3.0.1
 
   known-css-properties@0.30.0: {}
+
+  ky@1.7.2: {}
 
   levn@0.4.1:
     dependencies:

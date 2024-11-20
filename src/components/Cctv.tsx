@@ -50,7 +50,9 @@ export const Cctv = () => {
           "font-family": "monospace",
         }}
       >
-        <For each={logs()}>{(log) => <p>{log}</p>}</For>
+        <For each={logs()}>
+          {(log) => <p style={{ margin: "4px 0" }}>{log}</p>}
+        </For>
       </div>
       <video autoplay playsinline ref={video} />
     </div>
