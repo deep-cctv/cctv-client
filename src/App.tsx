@@ -1,7 +1,5 @@
+import { Cctv } from "./components/Cctv";
+
 export const App = () => {
-  return (
-    <div>
-      <video src="" />
-    </div>
-  );
+  return <Cctv />;
 };
