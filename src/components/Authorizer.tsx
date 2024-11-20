@@ -25,8 +25,6 @@ export const Authorizer = (props: { children: JSXElement }) => {
               },
               () => {
                 setError("인증에 실패했습니다.");
-                // For testing purposes, we'll set a token here.
-                setToken("example");
               },
             );
         }}

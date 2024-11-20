@@ -14,15 +14,20 @@ export const Cctv = () => {
       log("stream received");
 
       const mediaRecorder = new MediaRecorder(stream, {
-        mimeType: "video/webm",
+        mimeType: "video/mp4",
       });
       const CHUNK_INTERVAL = 5000;
+
+      const ws = new WebSocket(`${import.meta.env.VITE_APP_API_URL}/stream`);
 
       mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
           const reader = new FileReader();
           reader.onload = () => {
             const videoData = reader.result?.toString().split(",")[1];
+            if (videoData) {
+              ws.send(videoData);
+            }
             setLogs((logs) => [...logs, `chunk: ${videoData?.length}`]);
           };
           reader.readAsDataURL(event.data);
