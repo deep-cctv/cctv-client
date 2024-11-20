@@ -1,28 +1,22 @@
-## Usage
+# cctv-client
+
+deep-cctv의 cctv 클라이언트이다.
+
+## 개요
+
+스마트폰 또는 카메라를 가진 브라우저 환경에서 실행된다. 실시간으로 영상을 촬영하여 서버에 전송한다.
+
+## 실행
 
 ```bash
-$ npm install # or pnpm install or yarn install
+pnpm install
+pnpm run build
+pnpm run preview
 ```
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+## 개발
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm run dev`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
-
-### `npm run build`
-
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-## Deployment
-
-Learn more about deploying your application with the [documentations](https://vite.dev/guide/static-deploy.html)
+- Solid.js
+- pnpm
+- Typescript
+- Vite
