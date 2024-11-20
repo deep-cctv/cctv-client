@@ -15,11 +15,6 @@ export const Cctv = () => {
       video.srcObject = stream;
       log("stream received");
 
-      const mediaRecorder = new MediaRecorder(stream, {
-        mimeType: "video/mp4",
-      });
-      const CHUNK_INTERVAL = 5000;
-
       const ws = new WebSocket(
         `${import.meta.env.VITE_APP_API_URL}/stream?token=${token()}`,
       );
@@ -36,6 +31,18 @@ export const Cctv = () => {
         log(`WebSocket message, ${event.data}`);
       };
 
+      const mediaRecorder = new MediaRecorder(stream, {
+        mimeType: "video/mp4",
+      });
+
+      const createChunk = () => {
+        const CHUNK_INTERVAL = 5000;
+        mediaRecorder.start();
+        setTimeout(() => {
+          mediaRecorder.stop();
+        }, CHUNK_INTERVAL);
+      };
+
       mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
           const reader = new FileReader();
@@ -45,12 +52,13 @@ export const Cctv = () => {
               ws.send(videoData);
             }
             setLogs((logs) => [...logs, `chunk: ${videoData?.length}`]);
+            createChunk();
           };
           reader.readAsDataURL(event.data);
         }
       };
 
-      mediaRecorder.start(CHUNK_INTERVAL);
+      createChunk();
       log("recording started");
 
       mediaRecorder.onerror = (error) => {
