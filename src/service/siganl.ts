@@ -1,3 +1,6 @@
 import { createSignal } from "solid-js";
 
-export const [token, setToken] = createSignal<null | string>(null);
+export const [auth, setAuth] = createSignal<{
+  client_name: string;
+  token: string;
+} | null>(null);

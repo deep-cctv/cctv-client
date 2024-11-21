@@ -1,6 +1,6 @@
 import { createSignal, For, onMount } from "solid-js";
 
-import { token } from "../service/siganl";
+import { auth } from "../service/siganl";
 
 export const Cctv = () => {
   let video!: HTMLVideoElement;
@@ -16,13 +16,15 @@ export const Cctv = () => {
       log("stream received");
 
       const ws = new WebSocket(
-        `${import.meta.env.VITE_APP_API_URL}/stream?token=${token()}`,
+        `${import.meta.env.VITE_APP_API_URL}/stream?token=${auth()?.token}&client_name=${auth()?.client_name}`,
       );
       ws.onerror = (error) => {
         log(`WebSocket error, ${JSON.stringify(error)}`);
       };
       ws.onopen = () => {
         log("WebSocket connection opened");
+        createChunk();
+        log("recording started");
       };
       ws.onclose = () => {
         log("WebSocket connection closed");
@@ -57,9 +59,6 @@ export const Cctv = () => {
           reader.readAsDataURL(event.data);
         }
       };
-
-      createChunk();
-      log("recording started");
 
       mediaRecorder.onerror = (error) => {
         log(`MediaRecorder error, ${error}`);

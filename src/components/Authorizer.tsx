@@ -1,27 +1,32 @@
 import ky from "ky";
 import { createSignal, JSXElement, Show } from "solid-js";
 
-import { setToken, token } from "../service/siganl";
+import { auth, setAuth } from "../service/siganl";
 
 enum FormField {
+  CLIENT_NAME = "client_name",
   TOKEN = "token",
 }
 
 export const Authorizer = (props: { children: JSXElement }) => {
   const [error, setError] = createSignal<null | string>(null);
   return (
-    <Show fallback={props.children} when={!token()}>
+    <Show fallback={props.children} when={!auth()}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
           const form = new FormData(e.currentTarget);
+          const payload = {
+            token: form.get(FormField.TOKEN) as string,
+            client_name: form.get(FormField.CLIENT_NAME) as string,
+          };
           ky.post(`${import.meta.env.VITE_APP_API_URL}/authorize`, {
-            json: { token: form.get(FormField.TOKEN) },
+            json: payload,
           })
             .json<string>()
             .then(
-              (token) => {
-                setToken(token);
+              () => {
+                setAuth(payload);
               },
               () => {
                 setError("인증에 실패했습니다.");
@@ -31,8 +36,17 @@ export const Authorizer = (props: { children: JSXElement }) => {
       >
         <label>
           인증 토큰
-          <input name={FormField.TOKEN} type="password" />
+          <input id={FormField.TOKEN} name={FormField.TOKEN} type="password" />
         </label>
+        <label>
+          클라이언트 이름
+          <input
+            id={FormField.CLIENT_NAME}
+            name={FormField.CLIENT_NAME}
+            type="text"
+          />
+        </label>
+        <button>완료</button>
       </form>
       <p>{error()}</p>
     </Show>
